@@ -26,13 +26,13 @@ def pull_news(num):
 
     # Thanks to Luca Pattavina for giving me the right url
     if num <= 5:
-        news_url = ["http://www.disim.univaq.it/main/news.php?entrant=1"]
+        news_urls = ("http://www.disim.univaq.it/main/news.php?entrant=1")
     else:
-        news_url = ["http://www.disim.univaq.it/main/news.php?entrant=1",
-                    "http://www.disim.univaq.it/main/news.php?entrant=2"]
+        news_urls = ("http://www.disim.univaq.it/main/news.php?entrant=1",
+                     "http://www.disim.univaq.it/main/news.php?entrant=2")
 
     news = []
-    for url in news_url:
+    for url in news_urls:
         soup = utils.get_soup_from_url(url)
         post_items = soup.find_all(class_ = 'post_item_list')
         post_descs = soup.find_all(class_ = 'post_description')
