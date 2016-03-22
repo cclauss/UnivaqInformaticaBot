@@ -13,11 +13,13 @@ def news_command(bot, update, args=None):
 
     max_articles = min(int(args[0]) if args else 10, 10)
     news_array = utils.read_json("json/news.json")[:max_articles]
-    fmt = '- [{title}]({link})\n{description:.75}{suffix}\n'
+    fmt = '{}- [{title}]({link})\n{description:.75}{suffix}\n'
     news_to_string = ""
     for i, item in enumerate(news_array):
+        if item['description'].endswith('... ...'):  # if double elipsess
+            item['description'] = item['description'][:-7]  # remove them
         item["suffix"] = '...' if len(item['description']) > 75 else ''
-        news_to_string += str(i+1) + fmt.format(**item)
+        news_to_string += fmt.format(i+1, **item)
 
     bot.sendMessage(update.message.chat_id, parse_mode='Markdown', text=news_to_string)
 
@@ -39,8 +41,8 @@ def pull_news(num):
         for i, post_item in enumerate(post_items):
             news.append({
                 "title": post_item.h3.a.text,
-                "description": post_descs[i].get_text().replace("\n", " "),
-                "link": "http://www.disim.univaq.it/main/" + post_item.a.get('href')
+                "link": "http://www.disim.univaq.it/main/" + post_item.a.get('href'),
+                "description": post_descs[i].get_text().replace("\n", " ")
             })
     return news
 
