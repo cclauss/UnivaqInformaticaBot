@@ -15,8 +15,8 @@ def scrape_student_office():
     soup = utils.get_soup_from_url(student_office_url)
     if not soup:
         return
-    first_row = soup.find(string='AREA SCIENTIFICA').parent.parent.find_next_sibling()
-    address, phone, email, hours = first_row.find_all(class_='address_table_description')
+    area = soup.find(text='AREA SCIENTIFICA').parent.parent.find_next_sibling()
+    address, phone, email, hours = area.find_all(class_='address_table_description')
     scraped_info = {
         'indirizzo': address.text,
         'telefono': phone.text,
