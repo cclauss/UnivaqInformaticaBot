@@ -11,7 +11,7 @@ from libs.utils import utils
 def news_command(bot, update, args=None):
     """Defining the `news` command"""
 
-    max_articles = min(int(args[0]) if args else 10), 10):
+    max_articles = min(int(args[0]) if args else 10, 10)
     news_array = utils.read_json("json/news.json")[:max_articles]
     fmt = '- [{title}]({link})\n{description:.75}{suffix}\n'
     news_to_string = ""
@@ -34,8 +34,8 @@ def pull_news(num):
     news = []
     for url in news_urls:
         soup = utils.get_soup_from_url(url)
-        post_items = soup.find_all(class_ = 'post_item_list')
-        post_descs = soup.find_all(class_ = 'post_description')
+        post_items = soup.find_all(class_='post_item_list')
+        post_descs = soup.find_all(class_='post_description')
         for i, post_item in enumerate(post_items):
             news.append({
                 "title": post_item.h3.a.text,
